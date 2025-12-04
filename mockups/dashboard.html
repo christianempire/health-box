@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>HealthVault Dashboard Mockup</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Optional Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --color-bg: #f4f7fb;
+      --color-bg-card: #ffffff;
+      --color-primary: #1976d2;
+      --color-primary-light: #63a4ff;
+      --color-accent: #4caf50;
+      --color-text: #1e2a3a;
+      --color-text-muted: #607d8b;
+      --color-border: #e0e5ee;
+      --shadow-soft: 0 8px 20px rgba(15, 35, 52, 0.06);
+      --radius-lg: 16px;
+      --radius-md: 12px;
+      --radius-pill: 999px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background-color: var(--color-bg);
+      color: var(--color-text);
+    }
+
+    .app {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Topbar */
+
+    .topbar {
+      height: 64px;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--color-border);
+      background: #ffffffcc;
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-pill {
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 700;
+      font-size: 16px;
+    }
+
+    .topbar-title {
+      font-weight: 600;
+      font-size: 18px;
+    }
+
+    .topbar-subtitle {
+      font-size: 13px;
+      color: var(--color-text-muted);
+    }
+
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .icon-button {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: none;
+      background-color: transparent;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--color-text-muted);
+      transition: background 0.15s ease, transform 0.05s ease;
+    }
+
+    .icon-button:hover {
+      background-color: rgba(0, 0, 0, 0.05);
+      transform: translateY(-1px);
+    }
+
+    .user-chip {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background-color: #ffffff;
+      border: 1px solid var(--color-border);
+    }
+
+    .user-avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .user-name {
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    /* Layout */
+
+    .layout {
+      display: flex;
+      flex: 1;
+      min-height: 0;
+    }
+
+    /* Sidebar */
+
+    .sidebar {
+      width: 220px;
+      padding: 24px 16px;
+      border-right: 1px solid var(--color-border);
+      background-color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .nav-section-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+      letter-spacing: 0.08em;
+      margin-bottom: 4px;
+    }
+
+    .nav-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .nav-item {
+      display: flex;
+    }
+
+    .nav-link {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: 14px;
+      color: var(--color-text-muted);
+      text-decoration: none;
+      transition: background 0.15s ease, color 0.15s ease, transform 0.05s ease;
+    }
+
+    .nav-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--color-border);
+    }
+
+    .nav-link.active {
+      background-color: rgba(25, 118, 210, 0.1);
+      color: var(--color-primary);
+      font-weight: 600;
+    }
+
+    .nav-link.active .nav-dot {
+      background: var(--color-primary);
+    }
+
+    .nav-link:hover {
+      background-color: rgba(15, 35, 52, 0.04);
+      transform: translateX(1px);
+    }
+
+    .sidebar-footer {
+      margin-top: auto;
+      font-size: 11px;
+      color: var(--color-text-muted);
+    }
+
+    /* Main */
+
+    .main {
+      flex: 1;
+      overflow: auto;
+      padding: 24px 24px 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .main-header {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .main-title {
+      font-size: 22px;
+      font-weight: 600;
+    }
+
+    .main-subtitle {
+      font-size: 13px;
+      color: var(--color-text-muted);
+    }
+
+    .pill-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 10px;
+      border-radius: var(--radius-pill);
+      background-color: #e3f2fd;
+      color: var(--color-primary);
+      font-size: 11px;
+      font-weight: 500;
+    }
+
+    /* Card layout */
+
+    .grid-two {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      gap: 20px;
+    }
+
+    .card {
+      background-color: var(--color-bg-card);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-soft);
+      padding: 18px 18px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .card-title {
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .card-subtitle {
+      font-size: 12px;
+      color: var(--color-text-muted);
+    }
+
+    .card-tag {
+      padding: 3px 8px;
+      border-radius: var(--radius-pill);
+      font-size: 11px;
+      font-weight: 500;
+      background-color: rgba(25, 118, 210, 0.08);
+      color: var(--color-primary);
+    }
+
+    .card-tag.alt {
+      background-color: rgba(76, 175, 80, 0.08);
+      color: var(--color-accent);
+    }
+
+    .card-body {
+      font-size: 13px;
+      color: var(--color-text-muted);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .info-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .dot-status {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--color-accent);
+    }
+
+    .dot-warning {
+      background: #ffc107;
+    }
+
+    .label {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .info-main {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--color-text);
+    }
+
+    .link-inline {
+      font-size: 12px;
+      color: var(--color-primary);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .link-inline:hover {
+      text-decoration: underline;
+    }
+
+    /* Health Summary */
+
+    .progress-bar {
+      position: relative;
+      height: 8px;
+      border-radius: var(--radius-pill);
+      background-color: #e3edf6;
+      overflow: hidden;
+      margin-top: 6px;
+    }
+
+    .progress-fill {
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 75%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--color-primary), var(--color-primary-light));
+    }
+
+    .summary-grid {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+
+    .summary-item {
+      flex: 1;
+      min-width: 140px;
+      border-radius: var(--radius-md);
+      background-color: #f5f8fd;
+      padding: 8px 10px;
+    }
+
+    .summary-label {
+      font-size: 11px;
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .summary-value {
+      font-size: 16px;
+      font-weight: 600;
+      margin-top: 3px;
+    }
+
+    /* Quick Actions */
+
+    .quick-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .btn-ghost,
+    .btn-primary {
+      border: none;
+      cursor: pointer;
+      padding: 8px 14px;
+      font-size: 13px;
+      border-radius: var(--radius-pill);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 0.15s ease, transform 0.05s ease,
+        box-shadow 0.15s ease;
+    }
+
+    .btn-ghost {
+      background-color: #eef3fb;
+      color: var(--color-text);
+    }
+
+    .btn-ghost:hover {
+      background-color: #e0e7f5;
+      transform: translateY(-1px);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
+      color: #fff;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .btn-primary:hover {
+      box-shadow: 0 10px 24px rgba(25, 118, 210, 0.35);
+      transform: translateY(-1px);
+    }
+
+    /* Recent Documents */
+
+    .doc-list {
+      list-style: none;
+      padding: 0;
+      margin: 4px 0 0;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .doc-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(224, 229, 238, 0.7);
+    }
+
+    .doc-item:last-child {
+      border-bottom: none;
+    }
+
+    .doc-main {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .doc-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background-color: #e3f2fd;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: var(--color-primary);
+    }
+
+    .doc-text {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .doc-title {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--color-text);
+    }
+
+    .doc-meta {
+      font-size: 11px;
+      color: var(--color-text-muted);
+    }
+
+    .doc-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-link {
+      border: none;
+      background: none;
+      cursor: pointer;
+      font-size: 12px;
+      color: var(--color-primary);
+      padding: 4px 6px;
+      border-radius: var(--radius-pill);
+      transition: background 0.15s ease;
+    }
+
+    .btn-link:hover {
+      background-color: rgba(25, 118, 210, 0.06);
+    }
+
+    /* Responsive */
+
+    @media (max-width: 992px) {
+      .sidebar {
+        display: none;
+      }
+
+      .main {
+        padding: 16px;
+      }
+
+      .grid-two {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .topbar {
+        padding: 0 12px;
+      }
+
+      .main-title {
+        font-size: 18px;
+      }
+
+      .card {
+        padding: 14px 14px 12px;
+      }
+
+      .quick-actions {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .user-chip {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- Topbar -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <div class="logo-pill">H</div>
+        <div>
+          <div class="topbar-title">HealthVault</div>
+          <div class="topbar-subtitle">Personal health dashboard</div>
+        </div>
+      </div>
+      <div class="topbar-right">
+        <button class="icon-button" title="Notifications">
+          <!-- simple bell -->
+          🔔
+        </button>
+        <button class="icon-button" title="Settings">
+          ⚙️
+        </button>
+        <div class="user-chip">
+          <div class="user-avatar">C</div>
+          <div class="user-name">Christian</div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Layout -->
+    <div class="layout">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div>
+          <div class="nav-section-label">Navigation</div>
+          <ul class="nav-list">
+            <li class="nav-item">
+              <a href="#" class="nav-link active">
+                <span class="nav-dot"></span>
+                <span>Dashboard</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <span class="nav-dot"></span>
+                <span>Exams</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <span class="nav-dot"></span>
+                <span>Appointments</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <span class="nav-dot"></span>
+                <span>Prescriptions</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <span class="nav-dot"></span>
+                <span>Vaccines</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <span class="nav-dot"></span>
+                <span>Profile</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="sidebar-footer">
+          <div>Data powered by Google Drive &amp; Calendar.</div>
+        </div>
+      </aside>
+
+      <!-- Main -->
+      <main class="main">
+        <!-- Header -->
+        <div class="main-header">
+          <div class="pill-badge">Today • Jan 5, 2026</div>
+          <div class="main-title">Welcome back, Christian</div>
+          <div class="main-subtitle">
+            Here’s a quick overview of your upcoming appointments, exams, and recent documents.
+          </div>
+        </div>
+
+        <!-- Row: Next Appointment + Pending Exams -->
+        <div class="grid-two">
+          <!-- Next Appointment -->
+          <section class="card">
+            <div class="card-header">
+              <div>
+                <div class="card-title">Next appointment</div>
+                <div class="card-subtitle">Stay prepared for your visit</div>
+              </div>
+              <span class="card-tag alt">Today</span>
+            </div>
+            <div class="card-body">
+              <div class="info-row">
+                <span class="dot-status"></span>
+                <span class="info-main">Dr. Ana García · Cardiology</span>
+              </div>
+              <div class="info-row">
+                <span class="label">Time</span>
+                <span>3:00 PM – 3:30 PM</span>
+              </div>
+              <div class="info-row">
+                <span class="label">Location</span>
+                <span>Clínica San Borja</span>
+              </div>
+              <div class="info-row">
+                <a href="#" class="link-inline">View appointment details</a>
+              </div>
+            </div>
+          </section>
+
+          <!-- Pending Exams -->
+          <section class="card">
+            <div class="card-header">
+              <div>
+                <div class="card-title">Pending exams</div>
+                <div class="card-subtitle">Actions you still need to take</div>
+              </div>
+              <span class="card-tag">2 pending</span>
+            </div>
+            <div class="card-body">
+              <div class="info-row">
+                <span class="dot-status dot-warning"></span>
+                <span class="info-main">Blood test – Order uploaded</span>
+              </div>
+              <div class="card-subtitle">Not yet scheduled</div>
+
+              <div class="info-row">
+                <span class="dot-status dot-warning"></span>
+                <span class="info-main">Chest X-ray – Scheduled</span>
+              </div>
+              <div class="card-subtitle">Jan 10, 2026 · 9:00 AM</div>
+
+              <div class="info-row">
+                <a href="#" class="link-inline">View all exams</a>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <!-- Health Summary -->
+        <section class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Health summary</div>
+              <div class="card-subtitle">A quick glance at your profile</div>
+            </div>
+            <div class="card-subtitle">Profile completion: <strong>75%</strong></div>
+          </div>
+          <div class="card-body">
+            <div class="progress-bar">
+              <div class="progress-fill"></div>
+            </div>
+            <div class="summary-grid">
+              <div class="summary-item">
+                <div class="summary-label">Chronic conditions</div>
+                <div class="summary-value">2</div>
+              </div>
+              <div class="summary-item">
+                <div class="summary-label">Medications</div>
+                <div class="summary-value">1 active</div>
+              </div>
+              <div class="summary-item">
+                <div class="summary-label">Allergies</div>
+                <div class="summary-value">None</div>
+              </div>
+              <div class="summary-item">
+                <div class="summary-label">Last update</div>
+                <div class="summary-value">Dec 20, 2025</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Quick Actions -->
+        <section class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Quick actions</div>
+              <div class="card-subtitle">Jump directly to what you need</div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="quick-actions">
+              <button class="btn-ghost">Exams</button>
+              <button class="btn-ghost">Appointments</button>
+              <button class="btn-ghost">Prescriptions</button>
+              <button class="btn-ghost">Vaccines</button>
+              <button class="btn-primary">Upload document</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Recent Documents -->
+        <section class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Recently added documents</div>
+              <div class="card-subtitle">Your latest uploads from Google Drive</div>
+            </div>
+            <a href="#" class="link-inline">View all documents</a>
+          </div>
+          <div class="card-body">
+            <ul class="doc-list">
+              <li class="doc-item">
+                <div class="doc-main">
+                  <div class="doc-icon">🧪</div>
+                  <div class="doc-text">
+                    <div class="doc-title">Exam result – Blood test</div>
+                    <div class="doc-meta">Uploaded Jan 3, 2026 · Exams</div>
+                  </div>
+                </div>
+                <div class="doc-actions">
+                  <button class="btn-link">Open in Drive</button>
+                </div>
+              </li>
+              <li class="doc-item">
+                <div class="doc-main">
+                  <div class="doc-icon">💊</div>
+                  <div class="doc-text">
+                    <div class="doc-title">Prescription – Ibuprofen 400 mg</div>
+                    <div class="doc-meta">Uploaded Dec 30, 2025 · Prescriptions</div>
+                  </div>
+                </div>
+                <div class="doc-actions">
+                  <button class="btn-link">Open in Drive</button>
+                </div>
+              </li>
+              <li class="doc-item">
+                <div class="doc-main">
+                  <div class="doc-icon">💉</div>
+                  <div class="doc-text">
+                    <div class="doc-title">Vaccine certificate – Hepatitis B</div>
+                    <div class="doc-meta">Uploaded Dec 22, 2025 · Vaccines</div>
+                  </div>
+                </div>
+                <div class="doc-actions">
+                  <button class="btn-link">Open in Drive</button>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+</body>
+</html>
